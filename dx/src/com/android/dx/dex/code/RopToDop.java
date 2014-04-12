@@ -149,6 +149,7 @@ public final class RopToDop {
     //     Opcodes.INVOKE_DIRECT
     //     Opcodes.INVOKE_STATIC
     //     Opcodes.INVOKE_INTERFACE
+    //     Opcodes.MOVE73
     //     Opcodes.NEG_INT
     //     Opcodes.NOT_INT
     //     Opcodes.NEG_LONG

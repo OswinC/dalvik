@@ -2227,8 +2227,15 @@ HANDLE_OPCODE(OP_INVOKE_INTERFACE /*vB, {vD, vE, vF, vG, vA}, meth@CCCC*/)
     GOTO_invoke(invokeInterface, false);
 OP_END
 
-/* File: c/OP_UNUSED_73.cpp */
-HANDLE_OPCODE(OP_UNUSED_73)
+/* File: c/OP_MOVE73.cpp */
+HANDLE_OPCODE(OP_MOVE73 /*vA, vB*/)
+    vdst = INST_A(inst);
+    vsrc1 = INST_B(inst);
+    ILOGV("|move%s v%d,v%d %s(v%d=0x%08x)",
+        (INST_INST(inst) == OP_MOVE) ? "" : "-object", vdst, vsrc1,
+        kSpacing, vdst, GET_REGISTER(vsrc1));
+    SET_REGISTER(vdst, GET_REGISTER(vsrc1));
+    FINISH(1);
 OP_END
 
 /* File: c/OP_INVOKE_VIRTUAL_RANGE.cpp */

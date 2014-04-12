@@ -3202,11 +3202,18 @@ dalvik_inst:
 
 /* ------------------------------ */
     .balign 64
-.L_OP_UNUSED_73: /* 0x73 */
-/* File: armv5te/OP_UNUSED_73.S */
-/* File: armv5te/unused.S */
-    bl      common_abort
-
+.L_OP_MOVE73: /* 0x73 */
+/* File: armv5te/OP_MOVE73.S */
+    /* for move, move-object, long-to-int */
+    /* op vA, vB */
+    mov     r1, rINST, lsr #12          @ r1<- B from 15:12
+    mov     r0, rINST, lsr #8           @ r0<- A from 11:8
+    FETCH_ADVANCE_INST(1)               @ advance rPC, load rINST
+    GET_VREG(r2, r1)                    @ r2<- fp[B]
+    and     r0, r0, #15
+    GET_INST_OPCODE(ip)                 @ ip<- opcode from rINST
+    SET_VREG(r2, r0)                    @ fp[A]<- r2
+    GOTO_OPCODE(ip)                     @ execute next instruction
 
 /* ------------------------------ */
     .balign 64
@@ -12396,7 +12403,7 @@ dvmAsmAltInstructionStart = .L_ALT_OP_NOP
 
 /* ------------------------------ */
     .balign 64
-.L_ALT_OP_UNUSED_73: /* 0x73 */
+.L_ALT_OP_MOVE73: /* 0x73 */
 /* File: armv5te/alt_stub.S */
 /*
  * Inter-instruction transfer stub.  Call out to dvmCheckBefore to handle

@@ -495,6 +495,10 @@ public final class OpcodeInfo {
         new Info(Opcodes.INVOKE_INTERFACE, "invoke-interface",
             InstructionCodec.FORMAT_35C, IndexType.METHOD_REF);
 
+    public static final Info MOVE73 =
+        new Info(Opcodes.MOVE73, "move73",
+            InstructionCodec.FORMAT_12X, IndexType.NONE);
+
     public static final Info INVOKE_VIRTUAL_RANGE =
         new Info(Opcodes.INVOKE_VIRTUAL_RANGE, "invoke-virtual/range",
             InstructionCodec.FORMAT_3RC, IndexType.METHOD_REF);
@@ -1055,6 +1059,7 @@ public final class OpcodeInfo {
         set(INVOKE_DIRECT);
         set(INVOKE_STATIC);
         set(INVOKE_INTERFACE);
+        set(MOVE73);
         set(INVOKE_VIRTUAL_RANGE);
         set(INVOKE_SUPER_RANGE);
         set(INVOKE_DIRECT_RANGE);

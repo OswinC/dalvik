@@ -3879,11 +3879,16 @@ dalvik_inst:
 
 /* ------------------------------ */
     .balign 128
-.L_OP_UNUSED_73: /* 0x73 */
-/* File: mips/OP_UNUSED_73.S */
-/* File: mips/unused.S */
-    BAL(common_abort)
-
+.L_OP_MOVE73: /* 0x73 */
+/* File: mips/OP_MOVE73.S */
+    /* for move, move-object, long-to-int */
+    /* op vA, vB */
+    GET_OPB(a1)                            #  a1 <- B from 15:12
+    GET_OPA4(a0)                           #  a0 <- A from 11:8
+    FETCH_ADVANCE_INST(1)                  #  advance rPC, load rINST
+    GET_VREG(a2, a1)                       #  a2 <- fp[B]
+    GET_INST_OPCODE(t0)                    #  t0 <- opcode from rINST
+    SET_VREG_GOTO(a2, a0, t0)              #  fp[A] <- a2
 
 
 /* ------------------------------ */
@@ -15057,7 +15062,7 @@ dvmAsmAltInstructionStart = .L_ALT_OP_NOP
 
 /* ------------------------------ */
     .balign 128
-.L_ALT_OP_UNUSED_73: /* 0x73 */
+.L_ALT_OP_MOVE73: /* 0x73 */
 /* File: mips/alt_stub.S */
 /*
  * Inter-instruction transfer stub.  Call out to dvmCheckBefore to handle

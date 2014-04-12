@@ -3877,6 +3877,7 @@ static bool verifyInstruction(const Method* meth, InsnFlags* insnFlags,
         break;
 
     case OP_MOVE:
+	case OP_MOVE73:
     case OP_MOVE_FROM16:
     case OP_MOVE_16:
         copyRegister1(workLine, decInsn.vA, decInsn.vB, kTypeCategory1nr,
@@ -5806,7 +5807,6 @@ sput_1nr_common:
     case OP_UNUSED_41:
     case OP_UNUSED_42:
     case OP_UNUSED_43:
-    case OP_UNUSED_73:
     case OP_UNUSED_79:
     case OP_UNUSED_7A:
     case OP_BREAKPOINT:

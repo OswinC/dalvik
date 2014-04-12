@@ -4412,11 +4412,18 @@ dvmAsmInstructionStartCode = .L_OP_NOP
     jmp        common_invokeMethodNoRange
 
 /* ------------------------------ */
-.L_OP_UNUSED_73: /* 0x73 */
-/* File: x86/OP_UNUSED_73.S */
-/* File: x86/unused.S */
-    jmp     common_abort
-
+.L_OP_MOVE73: /* 0x73 */
+/* File: x86/OP_MOVE73.S */
+    /* for move, move-object, long-to-int */
+    /* op vA, vB */
+    movzbl rINSTbl,%eax          # eax<- BA
+    andb   $0xf,%al             # eax<- A
+    shrl   $4,rINST            # rINST<- B
+    GET_VREG_R rINST rINST
+    FETCH_INST_OPCODE 1 %ecx
+    ADVANCE_PC 1
+    SET_VREG rINST %eax           # fp[A]<-fp[B]
+    GOTO_NEXT_R %ecx
 
 /* ------------------------------ */
 .L_OP_INVOKE_VIRTUAL_RANGE: /* 0x74 */
@@ -11372,7 +11379,7 @@ dvmAsmAltInstructionStartCode = .L_ALT_OP_NOP
     jmp    *dvmAsmInstructionStart+(114*4)
 
 /* ------------------------------ */
-.L_ALT_OP_UNUSED_73: /* 0x73 */
+.L_ALT_OP_MOVE73: /* 0x73 */
 /* File: x86/alt_stub.S */
 /*
  * Inter-instruction transfer stub.  Call out to dvmCheckBefore to handle
@@ -15159,7 +15166,7 @@ dvmAsmInstructionStart:
     .long .L_OP_INVOKE_DIRECT /* 0x70 */
     .long .L_OP_INVOKE_STATIC /* 0x71 */
     .long .L_OP_INVOKE_INTERFACE /* 0x72 */
-    .long .L_OP_UNUSED_73 /* 0x73 */
+    .long .L_OP_MOVE73 /* 0x73 */
     .long .L_OP_INVOKE_VIRTUAL_RANGE /* 0x74 */
     .long .L_OP_INVOKE_SUPER_RANGE /* 0x75 */
     .long .L_OP_INVOKE_DIRECT_RANGE /* 0x76 */
@@ -15419,7 +15426,7 @@ dvmAsmAltInstructionStart:
     .long .L_ALT_OP_INVOKE_DIRECT /* 0x70 */
     .long .L_ALT_OP_INVOKE_STATIC /* 0x71 */
     .long .L_ALT_OP_INVOKE_INTERFACE /* 0x72 */
-    .long .L_ALT_OP_UNUSED_73 /* 0x73 */
+    .long .L_ALT_OP_MOVE73 /* 0x73 */
     .long .L_ALT_OP_INVOKE_VIRTUAL_RANGE /* 0x74 */
     .long .L_ALT_OP_INVOKE_SUPER_RANGE /* 0x75 */
     .long .L_ALT_OP_INVOKE_DIRECT_RANGE /* 0x76 */

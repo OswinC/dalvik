@@ -499,6 +499,10 @@ public final class Dops {
         new Dop(Opcodes.INVOKE_INTERFACE, Opcodes.INVOKE_INTERFACE,
             Opcodes.INVOKE_INTERFACE_RANGE, Form35c.THE_ONE, false);
 
+    public static final Dop MOVE73 =
+        new Dop(Opcodes.MOVE73, Opcodes.MOVE73,
+            Opcodes.NO_NEXT, Form12x.THE_ONE, true);
+
     public static final Dop INVOKE_VIRTUAL_RANGE =
         new Dop(Opcodes.INVOKE_VIRTUAL_RANGE, Opcodes.INVOKE_VIRTUAL,
             Opcodes.NO_NEXT, Form3rc.THE_ONE, false);
@@ -1053,6 +1057,7 @@ public final class Dops {
         set(INVOKE_DIRECT);
         set(INVOKE_STATIC);
         set(INVOKE_INTERFACE);
+        set(MOVE73);
         set(INVOKE_VIRTUAL_RANGE);
         set(INVOKE_SUPER_RANGE);
         set(INVOKE_DIRECT_RANGE);

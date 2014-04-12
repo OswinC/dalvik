@@ -183,7 +183,7 @@ enum Opcode {
     OP_INVOKE_DIRECT                = 0x70,
     OP_INVOKE_STATIC                = 0x71,
     OP_INVOKE_INTERFACE             = 0x72,
-    OP_UNUSED_73                    = 0x73,
+    OP_MOVE73                       = 0x73,
     OP_INVOKE_VIRTUAL_RANGE         = 0x74,
     OP_INVOKE_SUPER_RANGE           = 0x75,
     OP_INVOKE_DIRECT_RANGE          = 0x76,
@@ -449,7 +449,7 @@ enum Opcode {
         H(OP_INVOKE_DIRECT),                                                  \
         H(OP_INVOKE_STATIC),                                                  \
         H(OP_INVOKE_INTERFACE),                                               \
-        H(OP_UNUSED_73),                                                      \
+        H(OP_MOVE73),                                                         \
         H(OP_INVOKE_VIRTUAL_RANGE),                                           \
         H(OP_INVOKE_SUPER_RANGE),                                             \
         H(OP_INVOKE_DIRECT_RANGE),                                            \

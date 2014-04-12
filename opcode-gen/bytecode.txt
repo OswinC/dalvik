@@ -193,7 +193,7 @@ op   6f invoke-super                35c  n method-ref    continue|throw|invoke
 op   70 invoke-direct               35c  n method-ref    continue|throw|invoke
 op   71 invoke-static               35c  n method-ref    continue|throw|invoke
 op   72 invoke-interface            35c  n method-ref    continue|throw|invoke
-# unused: op 73
+op   73 move73                      12x  y none          continue
 op   74 invoke-virtual/range        3rc  n method-ref    continue|throw|invoke
 op   75 invoke-super/range          3rc  n method-ref    continue|throw|invoke
 op   76 invoke-direct/range         3rc  n method-ref    continue|throw|invoke

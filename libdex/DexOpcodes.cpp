@@ -145,7 +145,7 @@ static const char* gOpNames[kNumPackedOpcodes] = {
     "invoke-direct",
     "invoke-static",
     "invoke-interface",
-    "unused-73",
+    "move73",
     "invoke-virtual/range",
     "invoke-super/range",
     "invoke-direct/range",
