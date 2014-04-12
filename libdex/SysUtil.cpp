@@ -184,6 +184,45 @@ int sysMapFileInShmemWritableReadOnly(int fd, MemMapping* pMap)
 }
 
 /*
+ * Similar to sysMapFileInShmemWritableReadOnly(), but mapped with MAP_SHARED flag
+ */
+int sysMapFileInShmemWritableReadOnlyShared(int fd, MemMapping* pMap)
+{
+#ifdef HAVE_POSIX_FILEMAP
+    off_t start;
+    size_t length;
+    void* memPtr;
+
+    assert(pMap != NULL);
+
+    if (getFileStartAndLength(fd, &start, &length) < 0)
+        return -1;
+
+    memPtr = mmap(NULL, length, PROT_READ | PROT_WRITE, MAP_FILE | MAP_SHARED,
+            fd, start);
+    if (memPtr == MAP_FAILED) {
+        ALOGW("mmap(%d, R/W, FILE|PRIVATE, %d, %d) failed: %s", (int) length,
+            fd, (int) start, strerror(errno));
+        return -1;
+    }
+    if (mprotect(memPtr, length, PROT_READ) < 0) {
+        /* this fails with EACCESS on FAT filesystems, e.g. /sdcard */
+        int err = errno;
+        ALOGV("mprotect(%p, %d, PROT_READ) failed: %s",
+            memPtr, length, strerror(err));
+        ALOGD("mprotect(RO) failed (%d), file will remain read-write", err);
+    }
+
+    pMap->baseAddr = pMap->addr = memPtr;
+    pMap->baseLength = pMap->length = length;
+
+    return 0;
+#else
+    return sysFakeMapFile(fd, pMap);
+#endif
+} 
+
+/*
  * Map part of a file into a shared, read-only memory segment.  The "start"
  * offset is absolute, not relative.
  *

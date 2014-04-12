@@ -1563,7 +1563,7 @@ static bool handleFmt10x(CompilationUnit *cUnit, MIR *mir)
         case OP_RETURN_VOID:
             genReturnCommon(cUnit,mir);
             break;
-        case OP_UNUSED_73:
+        //case OP_UNUSED_73:
         case OP_UNUSED_79:
         case OP_UNUSED_7A:
         case OP_UNUSED_FF:

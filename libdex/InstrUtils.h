@@ -188,6 +188,11 @@ DEX_INLINE InstructionIndexType dexGetIndexTypeFromOpcode(Opcode opcode)
 }
 
 /*
+ * Replace OP_MOVE by OP_MOVE73
+ */
+void dexReplaceOPMOVE(u2* insns);
+
+/*
  * Decode the instruction pointed to by "insns".
  */
 void dexDecodeInstruction(const u2* insns, DecodedInstruction* pDec);

@@ -174,7 +174,7 @@ UnzipToFileResult dexOpenAndMap(const char* fileName, const char* tempFileName,
     /*
      * Pop open the (presumed) DEX file.
      */
-    fd = open(fileName, O_RDONLY | O_BINARY);
+    fd = open(fileName, O_RDWR | O_BINARY);
     if (fd < 0) {
         if (!quiet) {
             fprintf(stderr, "ERROR: unable to open '%s': %s\n",
@@ -183,7 +183,7 @@ UnzipToFileResult dexOpenAndMap(const char* fileName, const char* tempFileName,
         goto bail;
     }
 
-    if (sysMapFileInShmemWritableReadOnly(fd, pMap) != 0) {
+    if (sysMapFileInShmemWritableReadOnlyShared(fd, pMap) != 0) {
         fprintf(stderr, "ERROR: Unable to map '%s'\n", fileName);
         goto bail;
     }

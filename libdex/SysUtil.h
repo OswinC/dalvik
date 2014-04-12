@@ -61,6 +61,7 @@ void sysCopyMap(MemMapping* dst, const MemMapping* src);
  * On success, "pMap" is filled in, and zero is returned.
  */
 int sysMapFileInShmemWritableReadOnly(int fd, MemMapping* pMap);
+int sysMapFileInShmemWritableReadOnlyShared(int fd, MemMapping* pMap);
 
 /*
  * Map part of a file into a shared, read-only memory segment.

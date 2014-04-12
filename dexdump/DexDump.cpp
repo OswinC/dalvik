@@ -36,7 +36,9 @@
 #include "libdex/DexCatch.h"
 #include "libdex/DexClass.h"
 #include "libdex/DexDebugInfo.h"
+#include "libdex/DexFile.h"
 #include "libdex/DexOpcodes.h"
+#include "libdex/DexOptData.h"
 #include "libdex/DexProto.h"
 #include "libdex/InstrUtils.h"
 #include "libdex/SysUtil.h"
@@ -1057,7 +1059,9 @@ void dumpInstruction(DexFile* pDexFile, const DexCode* pCode, int insnIdx,
 void dumpBytecodes(DexFile* pDexFile, const DexMethod* pDexMethod)
 {
     const DexCode* pCode = dexGetCode(pDexFile, pDexMethod);
+    DexCode* pCodeWR = dexGetCodeWR(pDexFile, pDexMethod);
     const u2* insns;
+    u2* insnsWR;
     int insnIdx;
     FieldMethodInfo methInfo;
     int startAddr;
@@ -1065,6 +1069,7 @@ void dumpBytecodes(DexFile* pDexFile, const DexMethod* pDexMethod)
 
     assert(pCode->insnsSize > 0);
     insns = pCode->insns;
+    insnsWR = pCodeWR->insns;
 
     getMethodInfo(pDexFile, pDexMethod->methodIdx, &methInfo);
     startAddr = ((u1*)pCode - pDexFile->baseAddr);
@@ -1110,10 +1115,12 @@ void dumpBytecodes(DexFile* pDexFile, const DexMethod* pDexMethod)
             }
         }
 
+        dexReplaceOPMOVE(insnsWR);
         dexDecodeInstruction(insns, &decInsn);
         dumpInstruction(pDexFile, pCode, insnIdx, insnWidth, &decInsn);
 
         insns += insnWidth;
+        insnsWR += insnWidth;
         insnIdx += insnWidth;
     }
 
@@ -1771,6 +1778,20 @@ void processDexFile(const char* fileName, DexFile* pDexFile)
         printf("</api>\n");
 }
 
+/*
+ * Update checksum after any modifications.
+ */
+void updateDexChecksum(DexFile *pDexFile)
+{
+	u4 *pChecksum;
+	u4 *pOptChecksum;
+	pChecksum = (u4*) &(pDexFile->pHeader->checksum);
+	*pChecksum = dexComputeChecksum(pDexFile->pHeader); 
+	if (pDexFile->pOptHeader != NULL) {
+		pOptChecksum = (u4*) &(pDexFile->pOptHeader->checksum);
+		*pOptChecksum = dexComputeOptChecksum(pDexFile->pOptHeader);
+	}
+}
 
 /*
  * Process one file.
@@ -1788,6 +1809,12 @@ int process(const char* fileName)
     if (dexOpenAndMap(fileName, gOptions.tempFileName, &map, false) != 0) {
         return result;
     }
+	/*
+	 * Oswin
+	 *
+	 * Set writable for replacing OP_MOVE by OP_MOVE73
+	 */
+    sysChangeMapAccess(map.addr, map.length, true, &map);
     mapped = true;
 
     int flags = kDexParseVerifyChecksum;
@@ -1804,6 +1831,7 @@ int process(const char* fileName)
         printf("Checksum verified\n");
     } else {
         processDexFile(fileName, pDexFile);
+		updateDexChecksum(pDexFile);
     }
 
     result = 0;

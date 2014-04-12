@@ -616,6 +616,18 @@ DEX_INLINE Opcode dexOpcodeFromCodeUnit(u2 codeUnit) {
     }
 }
 
+
+/*
+ * Compose the opcode into codeUnit
+ */
+DEX_INLINE void dexOpcodeIntoCodeUnit(u2* codeUnit, const Opcode opcode) {
+    int lowByte = *codeUnit & 0xff;
+    if (lowByte != 0xff) {
+		*codeUnit = *codeUnit & ~((u2) 0xff);
+		*codeUnit |= opcode;
+	} 
+}
+
 /*
  * Return the name of an opcode.
  */

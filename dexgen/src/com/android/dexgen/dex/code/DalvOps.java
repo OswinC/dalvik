@@ -146,7 +146,7 @@ public final class DalvOps {
     public static final int INVOKE_DIRECT = 0x70;
     public static final int INVOKE_STATIC = 0x71;
     public static final int INVOKE_INTERFACE = 0x72;
-    public static final int UNUSED_73 = 0x73;
+    public static final int MOVE73 = 0x73;
     public static final int INVOKE_VIRTUAL_RANGE = 0x74;
     public static final int INVOKE_SUPER_RANGE = 0x75;
     public static final int INVOKE_DIRECT_RANGE = 0x76;

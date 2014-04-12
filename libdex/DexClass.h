@@ -114,6 +114,18 @@ DEX_INLINE const DexCode* dexGetCode(const DexFile* pDexFile,
     return (const DexCode*) (pDexFile->baseAddr + pDexMethod->codeOff);
 }
 
+/* 
+ * Get the writable DexCode for a DexMethod.  Returns NULL if the class is native
+ * or abstract.
+ */
+DEX_INLINE DexCode* dexGetCodeWR(const DexFile* pDexFile,
+    const DexMethod* pDexMethod)
+{
+    if (pDexMethod->codeOff == 0)
+        return NULL;
+    return (DexCode*) (pDexFile->baseAddr + pDexMethod->codeOff);
+}
+
 
 /* Read the header of a class_data_item without verification. This
  * updates the given data pointer to point past the end of the read

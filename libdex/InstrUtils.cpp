@@ -482,6 +482,19 @@ static inline u4 fetch_u4_impl(u4 offset, const u2* insns) {
 }
 
 /*
+ * Replace OP_MOVE by OP_MOVE73
+ */
+void dexReplaceOPMOVE(u2* insns)
+{
+	Opcode opcode = dexOpcodeFromCodeUnit(*insns);
+	
+	if (opcode == OP_MOVE)
+	{
+		dexOpcodeIntoCodeUnit(insns, OP_MOVE73);
+	}
+}
+
+/*
  * Decode the instruction pointed to by "insns".
  *
  * Fills out the pieces of "pDec" that are affected by the current
